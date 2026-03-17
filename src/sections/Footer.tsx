@@ -90,20 +90,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-
-      {/* Bottom Bar */}
-      <div className="bg-vega-bg-dark py-4">
-        <div className="container mx-auto px-4 text-center">
-          <a
-            href="https://onebrandingny.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-white/80 text-sm hover:text-white transition-colors duration-300"
-          >
-            POWERED BY ONEBRANDING
-          </a>
-        </div>
-      </div>
     </footer>
   );
 }

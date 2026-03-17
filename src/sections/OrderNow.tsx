@@ -3,62 +3,55 @@ import { useEffect, useRef, useState } from 'react';
 const orderPlatforms = [
   {
     id: 1,
-    name: 'VEGA Direct Order',
+    name: 'VEGA Direct Order (Menufy)',
     logo: (
-      <div className="flex flex-col items-center">
-        <div className="flex gap-1 mb-1">
-          {['V', 'E', 'G', 'A'].map((letter) => (
-            <div
-              key={letter}
-              className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-primary flex items-center justify-center text-white text-xs md:text-sm font-light"
-            >
-              {letter}
-            </div>
-          ))}
-        </div>
-        <span className="text-xs text-gray-400">mexican cuisine</span>
-        <span className="text-sm md:text-base font-semibold mt-1">Direct Order &gt;</span>
-      </div>
+      <img
+        src="https://www.vegamexican.com/images/order-online/menufy.jpg"
+        alt="Order online with Menufy"
+        className="h-24 md:h-32 w-full max-w-xs md:max-w-sm object-contain"
+      />
     ),
     link: 'https://order.toasttab.com/online/vegamexicancuisine',
-    bgColor: 'bg-gray-900',
+    bgColor: '',
   },
   {
     id: 2,
     name: 'Uber Eats',
     logo: (
-      <div className="flex flex-col items-center">
-        <span className="text-xl md:text-2xl font-bold text-black">UBER</span>
-        <span className="text-2xl md:text-3xl font-bold text-[#06C167]">eats</span>
-      </div>
+      <img
+        src="https://www.vegamexican.com/images/order-online/ubereats.jpg"
+        alt="Order on Uber Eats"
+        className="h-24 md:h-32 w-full max-w-xs md:max-w-sm object-contain"
+      />
     ),
     link: 'https://www.ubereats.com/en-US/nyc-suburbs/food-delivery/vega-mexican-cuisine/QriofYpPQe-azvJYF1qjqw/',
-    bgColor: 'bg-white',
+    bgColor: '',
   },
   {
     id: 3,
     name: 'Grubhub',
     logo: (
-      <span className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-        GRUBHUB
-      </span>
+      <img
+        src="https://www.vegamexican.com/images/order-online/grubhub.jpg"
+        alt="Order on Grubhub"
+        className="h-24 md:h-32 w-full max-w-xs md:max-w-sm object-contain"
+      />
     ),
     link: 'http://menus.fyi/805136',
-    bgColor: 'bg-[#F63440]',
+    bgColor: '',
   },
   {
     id: 4,
     name: 'DoorDash',
     logo: (
-      <div className="flex items-center gap-2">
-        <svg viewBox="0 0 24 24" className="w-8 h-8 md:w-10 md:h-10 fill-[#FF3008]">
-          <path d="M12.5 2.5a2 2 0 0 1 2 2v5.5h3.25a2.75 2.75 0 0 1 2.75 2.75v7a2.75 2.75 0 0 1-2.75 2.75H6.25A2.75 2.75 0 0 1 3.5 19.75v-7a2.75 2.75 0 0 1 2.75-2.75H9.5V4.5a2 2 0 0 1 2-2h1zm0 1.5h-1a.5.5 0 0 0-.5.5v6.75h6.25a1.25 1.25 0 0 1 1.25 1.25v7a1.25 1.25 0 0 1-1.25 1.25H6.25A1.25 1.25 0 0 1 5 19.75v-7A1.25 1.25 0 0 1 6.25 11.5h3.25V4.5a.5.5 0 0 0-.5-.5h-1z"/>
-        </svg>
-        <span className="text-lg md:text-xl font-bold text-[#FF3008]">DOORDASH</span>
-      </div>
+      <img
+        src="https://www.vegamexican.com/images/order-online/doordash.jpg"
+        alt="Order on DoorDash"
+        className="h-24 md:h-32 w-full max-w-xs md:max-w-sm object-contain"
+      />
     ),
     link: 'https://www.doordash.com/store/vega-mexican-cuisine-hartsdale-118573/en-US',
-    bgColor: 'bg-white',
+    bgColor: '',
   },
 ];
 
@@ -107,7 +100,7 @@ export default function OrderNow() {
               href={platform.link}
               target="_blank"
               rel="noopener noreferrer"
-              className={`${platform.bgColor} rounded-lg p-4 md:p-6 flex items-center justify-center min-h-[100px] md:min-h-[120px] transition-all duration-500 hover:scale-105 hover:shadow-xl ${
+              className={`rounded-lg flex items-center justify-center transition-all duration-500 hover:scale-105 ${
                 isVisible
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-8'

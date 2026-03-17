@@ -3,6 +3,7 @@ import Header from './sections/Header';
 import Hero from './sections/Hero';
 import About from './sections/About';
 import HoursBanner from './sections/HoursBanner';
+import Menu from './sections/Menu';
 import PressAwards from './sections/PressAwards';
 import Gallery from './sections/Gallery';
 import OrderNow from './sections/OrderNow';
@@ -17,6 +18,7 @@ function App() {
         <Hero />
         <About />
         <HoursBanner />
+        <Menu />
         <PressAwards />
         <Gallery />
         <OrderNow />

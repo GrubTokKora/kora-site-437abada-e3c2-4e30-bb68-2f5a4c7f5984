@@ -71,7 +71,7 @@ export default function Header() {
                   href={item.href}
                   target={item.external ? '_blank' : undefined}
                   rel={item.external ? 'noopener noreferrer' : undefined}
-                  className="px-3 py-2 text-sm text-white hover:text-primary transition-colors duration-300 tracking-wide"
+                  className="px-3 py-2 text-md text-white font-semibold hover:text-primary transition-colors duration-300 tracking-wide"
                 >
                   {item.label}
                 </a>
@@ -82,7 +82,7 @@ export default function Header() {
                 href="https://order.toasttab.com/online/vegamexicancuisine"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 text-sm text-primary font-semibold hover:text-white transition-colors duration-300 tracking-wide"
+                className="px-4 py-2 text-md text-primary font-bold hover:text-white transition-colors duration-300 tracking-wide"
               >
                 ORDER NOW
               </a>
