@@ -1,0 +1,41 @@
+/* VEGA MEXICAN - Custom App Styles */
+
+/* Smooth scrolling for the entire page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #A8B8BF;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #9B4D9E;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7A3D7D;
+}
+
+/* Selection styling */
+::selection {
+  background: #9B4D9E;
+  color: white;
+}
+
+/* Focus styling for accessibility */
+:focus-visible {
+  outline: 2px solid #9B4D9E;
+  outline-offset: 2px;
+}
+
+
+.read-the-docs {
+  color: #888;
+}
