@@ -9,6 +9,7 @@ import Gallery from './sections/Gallery';
 import OrderNow from './sections/OrderNow';
 import Footer from './sections/Footer';
 import ScrollToTop from './sections/ScrollToTop';
+import Newsletter from './sections/Newsletter';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <PressAwards />
         <Gallery />
         <OrderNow />
+        <Newsletter />
       </main>
       <Footer />
       <ScrollToTop />
