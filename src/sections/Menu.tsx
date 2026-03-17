@@ -202,9 +202,9 @@ export default function Menu() {
         </div>
 
         {/* Horizontally scrollable section headings */}
-        <div className="mt-4 md:mt-6 -mx-4">
-          <div className="px-4 py-3 overflow-x-auto scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-transparent">
-            <div className="flex justify-center items-center gap-3 md:gap-4 mx-auto w-full md:w-auto">
+        <div className="mt-4 md:mt-6">
+          <div className="px-4 md:px-8 py-3 overflow-x-auto">
+            <div className="flex justify-center items-center gap-3 md:gap-4 mx-auto w-max">
               {sectionLinks.map((link) => (
                 <button
                   key={link.id}
