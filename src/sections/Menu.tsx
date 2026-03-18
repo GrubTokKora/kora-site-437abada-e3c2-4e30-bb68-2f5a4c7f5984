@@ -226,7 +226,7 @@ export default function Menu() {
 
       {/* Weekly Specials */}
       {activeSection === 'menu-weekly' && (
-        <div className="py-8 md:py-10">
+        <div className="py-2">
           <MenuSection
             title="WEEKLY SPECIALS"
             subtitle="All week long"

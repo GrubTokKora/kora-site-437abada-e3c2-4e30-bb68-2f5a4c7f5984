@@ -1,4 +1,5 @@
 import './App.css';
+import { Route, Routes } from 'react-router-dom';
 import Header from './sections/Header';
 import Hero from './sections/Hero';
 import About from './sections/About';
@@ -10,8 +11,9 @@ import OrderNow from './sections/OrderNow';
 import Footer from './sections/Footer';
 import ScrollToTop from './sections/ScrollToTop';
 import Newsletter from './sections/Newsletter';
+import Hiring from './pages/Hiring.tsx';
 
-function App() {
+function Home() {
   return (
     <div className="min-h-screen">
       <Header />
@@ -28,6 +30,15 @@ function App() {
       <Footer />
       <ScrollToTop />
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/hiring" element={<Hiring />} />
+    </Routes>
   );
 }
 

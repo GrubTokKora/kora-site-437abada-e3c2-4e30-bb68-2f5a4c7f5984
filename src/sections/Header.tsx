@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Menu, X } from 'lucide-react';
 
 const navItems = [
-  { label: 'ABOUT', href: '#about' },
-  { label: 'MENU', href: '#menu' },
-  { label: 'PRESS', href: '#press' },
-  { label: 'CONTACT', href: '#contact' },
-  { label: 'HIRING', href: 'http://www.vegamexican.com/hiring', external: true },
+  { label: 'ABOUT', href: '/#about' },
+  { label: 'MENU', href: '/#menu' },
+  { label: 'PRESS', href: '/#press' },
+  { label: 'CONTACT', href: '/#contact' },
+  { label: 'HIRING', href: '/hiring' },
   { label: 'RESERVATION', href: 'https://resy.com/cities/hrts/vega-mexican-cuisine', external: true },
   { label: 'GIFT CARD', href: 'https://www.toasttab.com/vegamexicancuisine/giftcards', external: true },
   { label: 'SUBSCRIBE', href: 'https://www.toasttab.com/vegamexicancuisine/marketing-signup', external: true },
@@ -67,14 +68,23 @@ export default function Header() {
           <ul className="flex items-center gap-1 flex-wrap justify-center">
             {navItems.map((item) => (
               <li key={item.label}>
-                <a
-                  href={item.href}
-                  target={item.external ? '_blank' : undefined}
-                  rel={item.external ? 'noopener noreferrer' : undefined}
-                  className="px-3 py-2 text-md text-white font-semibold hover:text-primary transition-colors duration-300 tracking-wide"
-                >
-                  {item.label}
-                </a>
+                {item.external ? (
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3 py-2 text-md text-white font-semibold hover:text-primary transition-colors duration-300 tracking-wide"
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link
+                    to={item.href}
+                    className="px-3 py-2 text-md text-white font-semibold hover:text-primary transition-colors duration-300 tracking-wide"
+                  >
+                    {item.label}
+                  </Link>
+                )}
               </li>
             ))}
             <li>
@@ -106,15 +116,25 @@ export default function Header() {
             <ul className="flex flex-col items-center gap-2">
               {navItems.map((item) => (
                 <li key={item.label}>
-                  <a
-                    href={item.href}
-                    target={item.external ? '_blank' : undefined}
-                    rel={item.external ? 'noopener noreferrer' : undefined}
-                    className="block px-4 py-2 text-white hover:text-primary transition-colors duration-300"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {item.label}
-                  </a>
+                  {item.external ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block px-4 py-2 text-white hover:text-primary transition-colors duration-300"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    <Link
+                      to={item.href}
+                      className="block px-4 py-2 text-white hover:text-primary transition-colors duration-300"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  )}
                 </li>
               ))}
               <li>
