@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Header from '@/sections/Header';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,6 +10,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { API_BASE_URL, BUSINESS_ID, RECAPTCHA_V2_SITE_KEY } from '@/config';
+
+declare global {
+  interface Window {
+    grecaptcha?: {
+      render: (container: HTMLElement, parameters: { sitekey: string }) => number;
+      getResponse: (widgetId?: number) => string;
+      reset: (widgetId?: number) => void;
+      ready?: (cb: () => void) => void;
+    };
+  }
+}
 
 type HiringFormState = {
   fullName: string;
@@ -30,19 +42,164 @@ const initialState: HiringFormState = {
 export default function Hiring() {
   const [form, setForm] = useState<HiringFormState>(initialState);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
+  const [formSuccess, setFormSuccess] = useState<string | null>(null);
+
+  const recaptchaContainerRef = useRef<HTMLDivElement | null>(null);
+  const [recaptchaWidgetId, setRecaptchaWidgetId] = useState<number | null>(null);
 
   const positions = useMemo(
     () => ['Manager', 'Server', 'Bartender', 'Buss Person', 'Cooks', 'Dishwasher'],
     []
   );
 
+  const isEmailValid = (email: string) => {
+    // Simple client-side validation; backend enforces verification separately.
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  };
+
+  useEffect(() => {
+    if (!RECAPTCHA_V2_SITE_KEY.trim()) return;
+
+    const scriptSrc = 'https://www.google.com/recaptcha/api.js';
+    const existingScript = document.querySelector(
+      `script[src="${scriptSrc}"]`
+    ) as HTMLScriptElement | null;
+
+    const ensureScriptLoaded = () => {
+      if (existingScript) {
+        return Promise.resolve();
+      }
+
+      return new Promise<void>((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = scriptSrc;
+        script.async = true;
+        script.defer = true;
+        script.onload = () => resolve();
+        script.onerror = () => reject(new Error('Failed to load reCAPTCHA script.'));
+        document.head.appendChild(script);
+      });
+    };
+
+    let cancelled = false;
+
+    ensureScriptLoaded()
+      .then(async () => {
+        // Wait a bit for grecaptcha to attach to `window` (script is async).
+        const start = Date.now();
+        while (!cancelled && Date.now() - start < 5000) {
+          if (window.grecaptcha?.render) break;
+          await new Promise((r) => setTimeout(r, 150));
+        }
+
+        if (cancelled) return;
+        if (!recaptchaContainerRef.current) return;
+        if (!window.grecaptcha?.render) return;
+
+        const renderWidget = () => {
+          try {
+            const id = window.grecaptcha?.render(recaptchaContainerRef.current!, {
+              sitekey: RECAPTCHA_V2_SITE_KEY,
+            });
+            if (typeof id === 'number') setRecaptchaWidgetId(id);
+          } catch {
+            // If rendering fails we will show an error on submit.
+          }
+        };
+
+        if (typeof window.grecaptcha?.ready === 'function') {
+          window.grecaptcha.ready(renderWidget);
+        } else {
+          renderWidget();
+        }
+      })
+      .catch(() => {
+        // If script fails to load, keep the UI usable but block submission.
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setFormError(null);
+    setFormSuccess(null);
+
+    const fullName = form.fullName.trim();
+    const email = form.email.trim();
+    const message = form.message.trim();
+
+    if (!fullName) {
+      setFormError('Please enter your full name.');
+      return;
+    }
+
+    if (!email || !isEmailValid(email)) {
+      setFormError('Please enter a valid email address.');
+      return;
+    }
+
+    if (!message) {
+      setFormError('Please enter your message.');
+      return;
+    }
+
+    if (!RECAPTCHA_V2_SITE_KEY.trim()) {
+      setFormError('Form temporarily unavailable.');
+      return;
+    }
+
+    const grecaptcha = window.grecaptcha;
+    const token = grecaptcha
+      ? recaptchaWidgetId != null
+        ? grecaptcha.getResponse(recaptchaWidgetId)
+        : grecaptcha.getResponse()
+      : '';
+
+    if (!token) {
+      setFormError('Please complete the reCAPTCHA check.');
+      return;
+    }
+
     setIsSubmitting(true);
     try {
-      // Wire up to your backend/email service later.
-      await new Promise((r) => setTimeout(r, 350));
+      const response = await fetch(`${API_BASE_URL}/api/v1/public/forms/submit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          business_id: BUSINESS_ID,
+          form_type: 'hiring',
+          form_data: {
+            full_name: fullName,
+            phone: form.phone.trim() || null,
+            email,
+            position: form.position || null,
+            message,
+          },
+          submitter_email: email || null,
+          captcha_token: token,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => null);
+        throw new Error(data?.detail || data?.message || 'Submission failed.');
+      }
+
+      setFormSuccess('Thanks! Your application has been submitted.');
       setForm(initialState);
+
+      // Reset widget after successful submission.
+      if (typeof window.grecaptcha?.reset === 'function' && recaptchaWidgetId != null) {
+        window.grecaptcha.reset(recaptchaWidgetId);
+      }
+    } catch (err) {
+      setFormError(err instanceof Error ? err.message : 'Something went wrong.');
     } finally {
       setIsSubmitting(false);
     }
@@ -100,7 +257,6 @@ export default function Hiring() {
                       placeholder="Phone"
                       autoComplete="tel"
                       inputMode="tel"
-                      required
                     />
                   </div>
 
@@ -143,11 +299,35 @@ export default function Hiring() {
                       value={form.message}
                       onChange={(e) => setForm((s) => ({ ...s, message: e.target.value }))}
                       className="min-h-28"
+                      required
                     />
                   </div>
 
+                  {formError && (
+                    <p className="text-sm text-red-600 text-center">{formError}</p>
+                  )}
+                  {formSuccess && (
+                    <p className="text-sm text-green-600 text-center">{formSuccess}</p>
+                  )}
+
+                  <div className="flex justify-center pt-1">
+                    {RECAPTCHA_V2_SITE_KEY.trim() ? (
+                      <div
+                        ref={recaptchaContainerRef}
+                        className="flex items-center justify-center"
+                      />
+                    ) : (
+                      <p className="text-xs text-gray-500 text-center">
+                        Form temporarily unavailable.
+                      </p>
+                    )}
+                  </div>
+
                   <div className="flex items-center justify-end pt-1">
-                    <Button type="submit" disabled={isSubmitting}>
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting || !RECAPTCHA_V2_SITE_KEY.trim()}
+                    >
                       {isSubmitting ? 'Submitting…' : 'Submit'}
                     </Button>
                   </div>
