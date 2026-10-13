@@ -1,0 +1,73 @@
+# VEGA Mexican Cuisine
+
+> VEGA Mexican Cuisine, located in Hartsdale, NY, offers a diverse menu of traditional Mexican dishes ranging from appetizers and street corn to various fajitas, quesadillas, and seafood specialties under the tagline "EAT. DRINK. FIESTA."
+
+## Services
+### Catering Appetizers
+- California Nachos (Beans & Cheese)
+- California Nachos (Chicken)
+- California Nachos (Chorizo)
+- California Nachos (Steak)
+- Taquitos (Chicken)
+- Taquitos (Steak)
+- Wings of Fire
+- Cancun Calamari
+- Shrimp Ceviche
+- Tableside Guacamole
+- Avocado Fritters
+- Avocado Salad
+- Mexican Street Corn
+- Shrimp al Ajillo
+- Charred Cauliflower
+
+### Catering Desserts
+- Apple Taco
+- Chocolate Mousse
+- Vanilla Flan
+- Churros
+
+### Catering Entrées
+- Tinga Chicken
+- Lemon Chipotle Chicken
+- Carnitas
+- Cochinita Pibil
+- Churrasco
+- Carne Asada
+- Salmon Yucatán
+- Mixed Seafood Paella
+- Shrimp Chipotle
+- Shrimp Diabla
+- Chile Rellenos
+- Arroz con Pollo
+
+### Catering Classics
+- Fajita (Chicken)
+- Fajita (Steak)
+- Fajita (Ground Beef)
+- Fajita (Seafood)
+- Fajita (Market Vegetables)
+- Quesadilla (Chicken)
+- Quesadilla (Steak)
+- Quesadilla (Ground Beef)
+- Quesadilla (Seafood)
+
+### Signature
+- Tableside Guacamole
+- Shrimp Ceviche
+
+## Location & Contact
+- Address: Hartsdale, NY
+- Phone: (914) 723-0010
+
+## Hours
+- Monday: 11:30am - 9:30pm
+- Tuesday: 11:30am - 9:30pm
+- Wednesday: 11:30am - 9:30pm
+- Thursday: 11:30am - 9:30pm
+- Friday: 11:30am - 10pm
+- Saturday: 11:30am - 10pm
+- Sunday: 11:30am - 9pm
+
+## Action Links
+- [BOOK A TABLE](https://resy.com/cities/hrts/vega-mexican-cuisine)
+- [ORDER NOW](https://order.toasttab.com/online/vegamexicancuisine)
