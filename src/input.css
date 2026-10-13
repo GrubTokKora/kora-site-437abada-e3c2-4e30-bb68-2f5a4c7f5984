@@ -70,10 +70,7 @@
 
   [id] { scroll-margin-top: 5.5rem; }
 
-  /* Room for the mobile booking bar so it never covers the footer. */
-  @media (max-width: 1023.98px) {
-    body { padding-bottom: 5.25rem; }
-  }
+
 }
 
 @layer components {
@@ -427,18 +424,7 @@
   }
   .mobile-nav__phone:hover { text-decoration: underline; text-underline-offset: 0.25em; }
 
-  /* ---------- Shell: mobile booking bar ---------- */
-  .mobile-book {
-    position: fixed;
-    left: 0.75rem;
-    right: 5.25rem; /* leaves the bottom-right corner to the accessibility widget */
-    bottom: 0.75rem;
-    z-index: 45;
-    min-height: 3.25rem;
-  }
-  @media (min-width: 1024px) {
-    .mobile-book { display: none; }
-  }
+
 
   /* ---------- Shell: footer ---------- */
   .site-footer {
